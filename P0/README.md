@@ -12,6 +12,17 @@ Este projeto foi desenvolvido como parte do P0 (Primeiro fluxo com LLM). É uma 
 - Python 3.10 ou superior
 - Uma chave de API do Google Gemini (obtida no Google AI Studio)
 
+ ## Estrutura do Projeto:
+- main.py: Ponto de entrada da aplicação (interface com o usuário e leitura de arquivo).
+
+- llm_service.py: Módulo responsável pela comunicação com a API do Gemini e tratamento de erros.
+
+- requirements.txt: Lista de dependências do projeto.
+
+- .env: Arquivo (não versionado) para armazenar credenciais sensíveis.
+
+- texto.txt: Arquivo de entrada com o texto a ser resumido.
+
 ## Como executar
 
 ## Como executar o projeto
@@ -45,13 +56,4 @@ source venv/Scripts/activate
 ```bash
  python main.py
    
-   Estrutura do Projeto:
-- main.py: Ponto de entrada da aplicação (interface com o usuário e leitura de arquivo).
-
-- llm_service.py: Módulo responsável pela comunicação com a API do Gemini e tratamento de erros.
-
-- requirements.txt: Lista de dependências do projeto.
-
-- .env: Arquivo (não versionado) para armazenar credenciais sensíveis.
-
-- texto.txt: Arquivo de entrada com o texto a ser resumido.
+  
