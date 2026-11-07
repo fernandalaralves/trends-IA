@@ -1,60 +1,41 @@
 import os
 from dotenv import load_dotenv
-from google import genai
+from llm_service import LLMService
 
-# 1. Carrega as variáveis do arquivo .env
+# Carrega as variáveis do arquivo .env
 load_dotenv()
 
-# 2. Pega a chave da API
 api_key = os.getenv("GEMINI_API_KEY")
-
-if not api_key:
-    print("Erro: A chave GEMINI_API_KEY nao foi encontrada no arquivo .env")
-    exit()
-
-# 3. Inicializa o cliente do Google GenAI
-client = genai.Client(api_key=api_key)
-
-def resumir_texto(texto_original):
-    """Envia o texto para o Gemini e retorna o resumo."""
-    try:
-        # Faz a chamada para o modelo
-        response = client.models.generate_content(
-            model='gemini-3.8-flash',
-            contents=texto_original,
-            config=genai.types.GenerateContentConfig(
-                system_instruction="Voce e um assistente especialista em resumir textos. Resuma o texto fornecido pelo usuario em exatamente 3 topicos com marcadores (bullet points). Seja direto e objetivo.",
-                temperature=0.5,
-            )
-        )
-        return response.text
-    except Exception as e:
-        return f"Ocorreu um erro ao chamar a API: {e}"
-
 if __name__ == "__main__":
     print("=" * 40)
-    print("RESUMIDOR DE TEXTOS COM IA (Gemini)")
+    print("RESUMIDOR DE TEXTOS COM IA (Versao 2.0)")
     print("=" * 40)
-    print("Cole o texto que voce quer resumir e pressione ENTER duas vezes para finalizar:\n")
 
-    # Coleta o texto do usuário (multilinha)
-    linhas = []
-    while True:
-        linha = input()
-        if linha == "":
-            break
-        linhas.append(linha)
-    
-    texto_completo = "\n".join(linhas)
+    # Nome do arquivo que o usuário deve criar
+    arquivo_entrada = "texto.txt"
 
-    if not texto_completo.strip():
-        print("Nenhum texto foi inserido. Encerrando.")
+ # Verifica se o arquivo existe
+    if not os.path.exists(arquivo_entrada):
+        print(f"Erro: O arquivo '{arquivo_entrada}' nao foi encontrado.")
+        print(f"Por favor, crie um arquivo chamado '{arquivo_entrada}' na pasta P0 e cole o texto nele.")
     else:
-        print("\nProcessando com o Gemini, aguarde...\n")
-        resultado = resumir_texto(texto_completo)
+        print(f"Lendo o arquivo '{arquivo_entrada}'...")
         
-        print("-" * 40)
-        print("RESUMO GERADO:")
-        print("-" * 40)
-        print(resultado)
-        print("-" * 40)
+        # Abre e lê o arquivo
+        with open(arquivo_entrada, "r", encoding="utf-8") as f:
+            texto_completo = f.read()
+
+        if not texto_completo.strip():
+            print("O arquivo esta vazio. Insira um texto para resumir.")
+        else:
+            print("Processando com o Gemini, aguarde...\n")
+            
+            # Instancia o serviço e chama o método
+            service = LLMService()
+            resultado = service.resumir_texto(texto_completo)
+            
+            print("-" * 40)
+            print("RESUMO GERADO:")
+            print("-" * 40)
+            print(resultado)
+            print("-" * 40)
