@@ -15,18 +15,27 @@ class LLMService:
                 config=genai.types.GenerateContentConfig(
                     system_instruction="Voce e um assistente especialista em resumir textos. Resuma o texto fornecido pelo usuario em exatamente 3 topicos com marcadores (bullet points). Seja direto e objetivo.",
                     temperature=0.5,
-                )
+                ),
+                 # request_options define o tempo máximo de espera (em milissegundos)
+                request_options={"timeout": 30000} 
             )
+            
+            # Verifica se a resposta veio vazia (Tratamento de resposta inesperada)
+            if not response.text:
+                return "[ERRO DE RESPOSTA] O modelo nao retornou nenhum texto. Tente novamente."
+            
             return response.text
             
         except errors.APIError as e:
             # Tratamento de erro específico para a API (C03)
             if e.code == 400:
-                return "Erro de API: Verifique se a sua chave no arquivo .env esta correta e ativa."
+                return "[ERRO DE CREDENCIAL] A chave de API e invalida ou expirou. Gere uma nova chave no Google AI Studio."
+            elif e.code in [429, 503]:
+                return "[ERRO DE DISPONIBILIDADE] O servico do Gemini esta sobrecarregado ou indisponivel. Tente novamente mais tarde."
             elif e.code == 404:
-                return "Erro de API: O modelo selecionado nao foi encontrado. Verifique o nome do modelo."
+                return "[ERRO DE MODELO] O modelo selecionado nao foi encontrado."
             else:
-                return f"Erro na API do Gemini (Codigo {e.code}): {e.message}"
+                return f"[ERRO DA API] Falha na comunicacao com o Gemini (Codigo {e.code})."
                 
         except Exception as e:
             # Tratamento de erro genérico (ex: falta de internet)

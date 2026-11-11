@@ -1,3 +1,3 @@
-O gato Guga é muito fofo. 
-Ele adora pular bem alto no sofá da sala e brincar com o novelo de lã. 
-Depois de correr bastante pela casa inteira, Guga bebe todo o seu leite fresco na tigela e dorme quietinho em sua caminha.
+Reunião de equipe realizada hoje. 
+Ficou decidido que o novo design da página inicial precisa ser entregue até sexta-feira.
+O João ficou responsável pela parte de front-end, e a Maria vai revisar os textos.
