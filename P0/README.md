@@ -12,48 +12,62 @@ Este projeto foi desenvolvido como parte do P0 (Primeiro fluxo com LLM). É uma 
 - Python 3.10 ou superior
 - Uma chave de API do Google Gemini (obtida no Google AI Studio)
 
- ## Estrutura do Projeto:
-- main.py: Ponto de entrada da aplicação (interface com o usuário e leitura de arquivo).
-
-- llm_service.py: Módulo responsável pela comunicação com a API do Gemini e tratamento de erros.
-
-- requirements.txt: Lista de dependências do projeto.
-
-- .env: Arquivo (não versionado) para armazenar credenciais sensíveis.
-
-- texto.txt: Arquivo de entrada com o texto a ser resumido.
-
-## Como executar
+## Estrutura do Projeto
+- `main.py`: Ponto de entrada da aplicação (interface com o usuário e leitura de arquivo).
+- `llm_service.py`: Módulo responsável pela comunicação com a API do Gemini e tratamento de erros.
+- `requirements.txt`: Lista de dependências do projeto.
+- `.env`: Arquivo (não versionado) para armazenar credenciais sensíveis.
+- `texto.txt`: Arquivo de entrada com o texto a ser resumido.
 
 ## Como executar o projeto
 
- **Clone o repositório:**
-   ```bash
-   git clone https://github.com/fernandalaraalves/trends-IA.git
-   cd trends-IA/P0
-
-  **Crie e ative um ambiente virtual:**
-  ```bash
-  python -m venv venv
-# No Windows (Git Bash):
-source venv/Scripts/activate
-# No Linux/Mac:
-# source venv/bin/activate
-
-  **Instale as dependências:**
- ```bash
- pip install -r requirements.txt
-
- **Configure a chave de API:**
- env
- GEMINI_API_KEY=coloque_a_sua_chave_no_env
-
- **Prepare o texto:**
- Crie um arquivo chamado texto.txt dentro da pasta P0 e cole o texto que você deseja resumir.
-
-
- **Execute a aplicação:**
+### Clone o repositório
 ```bash
- python main.py
-   
-  
+git clone https://github.com/fernandalaraalves/trends-IA.git
+cd trends-IA/P0
+```
+
+### Crie e ative um ambiente virtual
+```bash
+python -m venv venv
+```
+
+No Windows (Git Bash):
+```bash
+source venv/Scripts/activate
+```
+
+No Linux/Mac:
+```bash
+source venv/bin/activate
+```
+
+### Instale as dependências
+```bash
+pip install -r requirements.txt
+```
+
+### Configure a chave de API
+Crie um arquivo `.env` e adicione:
+```env
+GEMINI_API_KEY=coloque_a_sua_chave_no_env
+```
+
+### Prepare o texto
+Crie um arquivo chamado `texto.txt` dentro da pasta `P0` e cole o texto que você deseja resumir.
+
+### Execute a aplicação
+```bash
+python main.py
+```
+
+## Configurações do Modelo
+As configurações do LLM (modelo, temperatura, limite de tokens) podem ser alteradas no arquivo `config.py` sem a necessidade de modificar o código principal.
+
+## Testes Locais (Sem chamar a API)
+Para validar a lógica de tratamento de respostas sem gastar a cota da API, execute:
+```bash
+python -m unittest test_main.py
+```
+## Validação em Ambiente Limpo
+O projeto foi validado recriando o ambiente virtual (`venv`) do zero e instalando as dependências via `requirements.txt`. A execução ocorreu sem erros e a aplicação realizou a chamada real ao LLM com sucesso.
